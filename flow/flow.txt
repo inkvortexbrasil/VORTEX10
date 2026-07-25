@@ -1,0 +1,8 @@
+SYSTEM INSTRUCTION: You have received 5 reference images. You must strictly map each image to its respective scene in the cinematic sequence.
+
+- [01] -> is the EXCLUSIVE visual source for **Cena 1:**.
+- [02] -> is the EXCLUSIVE visual source for **Cena 2:**.
+- [03] -> is the EXCLUSIVE visual source for **Cena 3:**.
+- [04] -> is the EXCLUSIVE visual source for **Cena 4:**.
+- [05] -> is the EXCLUSIVE visual source for **Cena 5:**.
+
