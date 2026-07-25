@@ -1,0 +1,39 @@
+Roteiro Sonoro Completo para *DTG e DTF: A Revolução Química que Transforma Garment Waste em Alta Costura Sustentável* – 50 segundos de Dark Trap Sinfônico com Sound Design Cinematográfico
+
+---
+
+**ATO 1: A PREPARAÇÃO (0s – 10s) – O DESPERTAR DA MATÉRIA
+
+A peça se inicia no silêncio absoluto, quebrado apenas por um *sub-bass* subliminar (30Hz), quase imperceptível, como o zumbido de uma máquina industrial adormecida. O BPM é lento e irregular, flutuando entre **70-75 BPM** em compasso **4/4**, criando uma atmosfera opressiva e misteriosa. Aos 2 segundos, um *synth pad* granular (textura de vidro moído) entra em *fade-in*, com notas longas e dissonantes (intervalos de segundas menores e trítonos), simulando a tensão molecular de tecidos sendo decompostos quimicamente. A reverberação é extrema, com *pre-delay* de 200ms e *decay* de 6s, dando a sensação de um espaço cavernoso – uma fábrica abandonada ou um laboratório secreto.
+
+Aos 5 segundos, um *piano preparado* (com objetos metálicos sobre as cordas) executa uma melodia fragmentada em *staccato*, notas isoladas e espaçadas, como gotas de solvente caindo em um recipiente. Cada tecla é acompanhada por um *whoosh* sutil de ar comprimido (SFX), reforçando a ideia de pressão e transformação. Aos 8 segundos, um *riser* de *white noise* (filtrado com um *low-pass* que desce de 10kHz para 200Hz) começa a subir lentamente, anunciando a transição para o próximo ato. O *sub-bass* dobra de intensidade, e um *glitch* digital (amostra de tecido sendo rasgado, processada com *bitcrushing* e *time-stretching*) é inserido como um *stutter* rítmico, preparando o terreno para a percussão.
+
+
+---
+
+**ATO 2: O DESENVOLVIMENTO (10s – 40s) – A ALQUIMIA DO CAOS ORDENADO
+
+Aos 10 segundos, o *riser* atinge seu ápice e **o drop entra com força**: o BPM salta para **140 BPM**, mantendo o compasso **4/4**, mas agora com uma *groove* sincopada e hipnótica. A percussão é uma fusão de *kicks* de 808 (com *punch* de 50Hz e *tail* de 200ms) e *snares* orgânicos (gravados em uma caixa de metal, processados com *transient shaper* para realçar o ataque). Os *hi-hats* são uma combinação de *closed hats* robóticos (sintetizados com *FM synthesis*) e *open hats* texturizados (amostras de correntes sendo arrastadas, filtradas com *high-pass* em 8kHz).
+
+O *sub-bass* agora é acompanhado por um *bass synth* agressivo, com *waveform* de *sawtooth* distorcido (usando *saturation* analógica emulado), tocando uma linha melódica em *portamento* (deslizando entre notas como um líquido viscoso). Aos 15 segundos, um *choir synth* (vozes sintetizadas em *granular synthesis*) entra em *fade-in*, cantando em latim distorcido ("*Mutatio, creatio, resurrectio*"), com *formant shifting* para soar como um coro de máquinas. Aos 20 segundos, um *riser* de *sweep* (com *pitch bend* ascendente e *delay* em *ping-pong*) é acionado, seguido por um *whoosh* de ar comprimido (SFX) e um *impact* metálico (amostra de prensa hidráulica, processada com *convolution reverb* em uma catedral).
+
+Aos 25 segundos, a textura se adensa: um *string ensemble* (violinos e cellos) entra com *staccato* frenético, tocando uma melodia em *minor key* (D#m), com *vibrato* exagerado e *portamento* entre as notas. Os *synths* agora incluem um *lead* de *pluck* (inspirado em *arpeggiator* de *trance*, mas com *distortion* pesada), criando uma sensação de urgência. Aos 30 segundos, um *glitch* de *tape stop* (como uma máquina emperrando) interrompe momentaneamente o ritmo, seguido por um *riser* de *white noise* com *filter automation* (abrindo e fechando o *low-pass* rapidamente). Aos 35 segundos, um *impact* de *sub drop* (com *sine wave* em 40Hz e *white noise* comprimido) é disparado, acompanhado por um *whoosh* descendente (SFX de tecido sendo esticado até o limite). O coro de máquinas repete sua frase, agora com *vocoder* e *pitch shifting* para soar mais robótico.
+
+
+---
+
+**ATO 3: O ÁPICE E RESOLUÇÃO (40s – 50s) – A RENASCENÇA DO TECIDO
+
+Aos 40 segundos, **o clímax é desencadeado**: o BPM permanece em **140 BPM**, mas a intensidade é máxima. Todos os elementos anteriores estão presentes, agora com adição de *brass* (trompetes e trombones) em *fortissimo*, tocando uma fanfarra dissonante (intervalos de sétimas e nonas). O *sub-bass* é dobrado por um *sine wave* em 30Hz, criando uma pressão física no ouvinte. Os *kicks* são agora acompanhados por *impacts* de *explosão* (amostras de dinamite processadas com *convolution reverb* em um túnel), sincronizados com os tempos fortes.
+
+Aos 42 segundos, um *riser* de *orchestral hit* (com *choir*, *strings* e *brass* em uníssono) é acionado, seguido por um *whoosh* de vento (SFX de tecido sendo lançado ao ar). Aos 44 segundos, um *glitch* de *reverse reverb* (como um eco invertido) anuncia a queda: aos 45 segundos, **o drop final** ocorre. O *sub-bass* e os *kicks* são cortados abruptamente, deixando apenas os *strings* e o *choir* em um *crescendo* dramático. Um *impact* de *metal crunch* (amostra de máquina de costura industrial sendo esmagada) é disparado, seguido por um *whoosh* descendente (SFX de tecido caindo lentamente).
+
+Aos 48 segundos, a música se resolve: o *choir* canta uma nota longa (D#), sustentada por um *synth pad* etéreo (com *granular synthesis* e *freeze effect*). Um *piano* toca uma melodia minimalista (notas em *arpeggio* ascendente), acompanhado por *glitches* sutis (amostras de botões sendo pressionados, processadas com *bitcrushing*). Aos 50 segundos, o som some em um *fade-out* lento, deixando apenas o *sub-bass* (30Hz) e um *white noise* filtrado (como um suspiro final), simbolizando a transformação completa do resíduo em alta costura. O último *glitch* é um *click* seco (como uma máquina sendo desligada), encerrando a peça com precisão cirúrgica.
+
+---
+
+**Notas Técnicas Finais:**
+- **Harmonia:** Progressões em *minor key* (D#m, F#m, G#m) com modulações súbitas para criar tensão. Uso de *pedal tones* no baixo para ancorar a dissonância.
+- **Instrumentação:** Combinação de orquestra sinfônica (gravada em *dry* e processada com *reverb* algorítmico), *synths* analógicos (Moog, Roland) e *sound design* industrial (amostras de fábricas, máquinas de costura, solventes).
+- **Sound FX:** *Risers* e *whooshes* são construídos com *white noise*, *sweeps* de *synth* e amostras de ar comprimido. *Impacts* usam *sub drops*, *explosões* processadas e *metal crunch*. *Glitches* incluem *tape stops*, *bitcrushing* e *reverse reverb*.
+- **Evolução Emocional:** Do mistério opressivo (Ato 1) à urgência caótica (Ato 2), culminando na catarse épica (Ato 3), onde a dissonância se resolve em uma beleza quase transcendental – como um tecido renascendo das cinzas.
