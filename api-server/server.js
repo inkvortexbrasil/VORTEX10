@@ -2425,32 +2425,31 @@ async function handleApi(req,res){
         const generatedFiles = [];
         const { execSync } = require('child_process');
 
-        if (!fs.existsSync(sonoDir)) fs.mkdirSync(sonoDir, { recursive: true });
         if (!fs.existsSync(audioLegDir)) fs.mkdirSync(audioLegDir, { recursive: true });
 
         for (const mp4File of mp4Files) {
             const mp4Path = path.join(sourceDir, mp4File);
             const baseName = path.parse(mp4File).name.replace(/_?[Ll]egendado/gi, '').trim();
+            const out4x5Name = `${campStr} - ${baseName}_CAPA_4x5.png`;
+            const out4x5LegPath = path.join(audioLegDir, out4x5Name);
 
-            const out1x1Name = `${baseName}_CAPA_1x1.png`;
-            const out4x5Name = `${baseName}_CAPA_4x5.png`;
-
-            const out1x1Sono = path.join(sonoDir, out1x1Name);
-            const out4x5Sono = path.join(sonoDir, out4x5Name);
-            const out4x5Leg = path.join(audioLegDir, out4x5Name);
-
-            const cmd1x1 = `ffmpeg -y -ss 00:00:00.5 -i "${mp4Path}" -vframes 1 "${out1x1Sono}"`;
-            try { execSync(cmd1x1, { stdio: 'ignore' }); } catch(e) {}
-
-            const cmd4x5 = `ffmpeg -y -ss 00:00:00.5 -i "${mp4Path}" -vframes 1 -filter_complex "[0:v]scale=1080:1350:force_original_aspect_ratio=increase,crop=1080:1350,gblur=sigma=40[bg]; [0:v]scale=1080:1080[fg]; [bg][fg]overlay=0:135" "${out4x5Sono}"`;
+            // Renderiza diretamente a composição 4:5 (1080x1350) no destino final (áudio legendado)
+            const cmd4x5 = `ffmpeg -y -ss 00:00:00.5 -i "${mp4Path}" -vframes 1 -filter_complex "[0:v]scale=1080:1350:force_original_aspect_ratio=increase,crop=1080:1350,gblur=sigma=40[bg]; [0:v]scale=1080:1080[fg]; [bg][fg]overlay=0:135" "${out4x5LegPath}"`;
             try {
                 execSync(cmd4x5, { stdio: 'ignore' });
-                if (fs.existsSync(out4x5Sono)) {
-                    fs.copyFileSync(out4x5Sono, out4x5Leg);
+                if (fs.existsSync(out4x5LegPath)) {
                     generatedFiles.push(out4x5Name);
                 }
             } catch(e) {
                 console.error('Erro ao renderizar capa 4x5:', e);
+            }
+        }
+
+        // Limpeza rigorosa da pasta sonoplastia: remove qualquer arquivo PNG residual se existir
+        if (fs.existsSync(sonoDir)) {
+            const pngResiduals = fs.readdirSync(sonoDir).filter(f => f.toLowerCase().endsWith('.png'));
+            for (const png of pngResiduals) {
+                try { fs.unlinkSync(path.join(sonoDir, png)); } catch(e) {}
             }
         }
 
