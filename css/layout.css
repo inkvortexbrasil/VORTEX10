@@ -1,0 +1,201 @@
+/* Configuração do Cockpit - VORTEX 9.0 */
+
+.vortexPage {
+  height: calc(100vh - 80px); 
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vortexPage:not(.active) {
+  display: none !important;
+}
+
+/* --- CENTRO DE COMANDO --- */
+.ideationContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#pageLibrary .ideationContainer {
+  overflow-y: hidden; /* Trava o container da Biblioteca para manter o título fixo */
+}
+
+#pageLibrary .subjectsGrid {
+  flex: 1;
+  overflow-y: auto; /* Permite a rolagem apenas nos cards */
+  min-height: 0;
+  padding-top: 12px; /* Espaço para a tag COMPLETO não cortar */
+  padding-bottom: 40px; /* Respiro no final da rolagem */
+  padding-right: 8px; /* Respiro para a barra de rolagem */
+}
+
+.ideationHeader {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.ideationHeader h1 {
+  font-family: var(--uiRounded);
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+.ideationHeader p {
+  font-size: 1.1rem;
+  color: var(--ivTextSecondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.subjectsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.subjectCard {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.subjectCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0, 174, 239, 0.1);
+}
+
+.subjectCard::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--brandGrad);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.subjectCard:hover::before {
+  opacity: 1;
+}
+
+.subjectCard h3 {
+  font-family: var(--uiRounded);
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.subjectCard p {
+  color: var(--ivTextSecondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* --- PÁGINA 2: ESTÚDIO (Grid Master 40/60) --- */
+.workspaceMain {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  grid-template-rows: 1fr;
+  grid-template-areas: "left right";
+  gap: 24px;
+  overflow: hidden;
+  height: 100%; 
+}
+
+/* Override exclusivo para a aba Multiverso: Layout Centralizado */
+.workspaceMain.multiversoLayout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  max-width: 100%;
+  margin: 0 auto;
+  gap: 24px;
+  width: 100%;
+}
+.multiversoLayout .workspaceLeftPanel {
+  width: 320px;
+  flex-shrink: 0;
+}
+.multiversoLayout .content {
+  flex: 1;
+  max-width: 100%;
+  width: 100%;
+  justify-self: auto; /* reset from earlier */
+}
+
+/* PAINEL ESQUERDO */
+.workspaceLeftPanel {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  position: relative; 
+}
+
+/* Controles de API */
+.apiVerticalControls {
+  position: absolute;
+  top: 38px;
+  left: 24px; 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+/* PAINEL DIREITO */
+.content {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  justify-self: center;
+  max-width: 900px;
+  width: 100%;
+  
+  /* Crystal Glassmorphism Removido (Totalmente Cristalino) */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0; /* Removido padding geral para os componentes respirarem */
+}
+
+/* --- FULLSCREEN PRESENTATION MODE --- */
+.fullscreen-presentation {
+  position: fixed !important;
+  top: 100px !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+  background: rgba(8, 12, 20, 0.98) !important; /* Almost opaque to hide background UI */
+  backdrop-filter: blur(20px) !important;
+  padding: 40px !important;
+  box-sizing: border-box !important;
+}
