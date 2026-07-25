@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
-title Central InkVortex API - Selecao de Motor v9.0
+title Central InkVortex API - Selecao de Motor v10.0
 set "INKVORTEX_ROOT=%~dp0"
 if not exist "%INKVORTEX_ROOT%fonts" mkdir "%INKVORTEX_ROOT%fonts" >nul 2>nul
 if not exist "%INKVORTEX_ROOT%palco" mkdir "%INKVORTEX_ROOT%palco" >nul 2>nul
@@ -13,7 +13,7 @@ for %%D in (4x5 9x16 video capa) do (
   if exist "%INKVORTEX_ROOT%%%D" rmdir /s /q "%INKVORTEX_ROOT%%%D" >nul 2>nul
 )
 for %%F in ("%INKVORTEX_ROOT%SCRIPT-MESTRE-INKVORTEX-v*.txt") do (
-  if exist "%%~fF" if /I not "%%~nxF"=="SCRIPT-MESTRE-INKVORTEX-v9.0.txt" del /q "%%~fF" >nul 2>nul
+  if exist "%%~fF" if /I not "%%~nxF"=="SCRIPT-MESTRE-INKVORTEX-v10.0.txt" del /q "%%~fF" >nul 2>nul
 )
 cd /d "%INKVORTEX_ROOT%api-server"
 
@@ -30,7 +30,7 @@ if errorlevel 1 (
 call :read_env
 echo.
 echo Verificando instancia local InkVortex...
-node "%INKVORTEX_ROOT%api-server\inkvortex-runtime.js" stop-old --port 8787 --version 9.0
+node "%INKVORTEX_ROOT%api-server\inkvortex-runtime.js" stop-old --port 8787 --version 10.0
 if errorlevel 1 (
   echo.
   echo A Central nao foi iniciada para proteger a porta local.
@@ -40,7 +40,7 @@ if errorlevel 1 (
 
 echo.
 echo ===================================================
-echo     CENTRAL INKVORTEX V9 - MOTOR MISTRAL AI
+echo     CENTRAL INKVORTEX V10 - MOTOR MISTRAL AI
 echo ===================================================
 echo Iniciando boot do sistema...
 
@@ -51,7 +51,7 @@ goto finalize
 :finalize
 call :write_env
 echo.
-echo Iniciando servidor InkVortex 9.0...
+echo Iniciando servidor InkVortex 10.0...
 node "%INKVORTEX_ROOT%api-server\server.js"
 if errorlevel 1 (
   echo.
