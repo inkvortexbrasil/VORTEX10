@@ -307,9 +307,10 @@ function renderAudioPromptResult(style, prompt) {
   }
 
   resultGrid.innerHTML = `
-    <!-- Barra de 4 Ações Única e Centralizada (Sem abas superiores duplicadas) -->
+    <!-- Barra de Ações Única e Centralizada -->
     <div style="display:flex; gap:8px; align-items:center; justify-content:center; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1); flex-wrap:wrap;">
       <button onclick="window.generateAudioPrompt()" class="actionBtn" style="background:var(--brandGrad);color:#fff;border:none;padding:7px 16px;font-weight:bold;font-size:0.82rem;border-radius:6px;cursor:pointer;white-space:nowrap;">✨ GERAR PROMPT (IA)</button>
+      <button id="btnRenderCapa4x5" class="actionBtn" style="padding:7px 16px;font-weight:bold;font-size:0.82rem;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;background:rgba(0,174,239,0.14);border:1px solid rgba(0,174,239,0.4);color:var(--cyan);" onclick="window.startRenderizarCapas4x5(this)">🖼️ RENDERIZAR CAPA (4x5)</button>
       <button id="btnRenderizarAudio" class="actionBtn" style="padding:7px 16px;font-weight:bold;font-size:0.82rem;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;${isRendering ? 'background:linear-gradient(135deg,#FF0055,#B0003A);color:#fff;opacity:0.8;pointer-events:none;animation:renderBtnPulse 1.5s infinite;' : 'background:transparent;border:1px solid rgba(255,255,255,0.3);color:var(--ivTextSecondary);'}" onclick="window.startRenderizarAudio(this)">${isRendering ? '🎵 Legendando...' : '🎵 Renderizar Clipe'}</button>
       <button onclick="${isLegendaTab ? 'window.copyAudioCaption()' : 'window.copyAudioPrompt(this)'}" data-prompt="${encodeURIComponent(prompt)}" class="actionBtn" style="padding:7px 14px;font-size:0.82rem;background:rgba(255,255,255,0.08);color:#fff;font-weight:bold;border:1px solid rgba(255,255,255,0.18);cursor:pointer;border-radius:6px;white-space:nowrap;">📋 COPIAR</button>
       <button class="actionBtn" style="padding:7px 16px;border-radius:6px;font-weight:bold;font-size:0.82rem;transition:all 0.2s;${isLegendaTab ? 'background:var(--brandGrad);color:#fff;border:none;' : 'background:transparent;border:1px solid rgba(255,255,255,0.3);color:var(--ivTextSecondary);'}" onclick="window.currentAudioTab = window.currentAudioTab === 'legenda' ? 'prompt' : 'legenda'; window.renderAudioPromptResult(window.lastAudioStyle, window.lastAudioPrompt)">📱 LEGENDA SOCIAL</button>
@@ -579,3 +580,60 @@ window.startRenderizarAudio = async function(btn) {
     renderAudioPromptResult(campaign.audioStyle || '', campaign.audioPrompt || '');
   }
 };
+
+window.startRenderizarCapas4x5 = async function(btn) {
+  const campaign = AppState.getSelectedCampaign();
+  if(!campaign) {
+    alert('Nenhuma minissérie selecionada.');
+    return;
+  }
+
+  const originalText = btn ? btn.innerText : '🖼️ RENDERIZAR CAPA (4x5)';
+  if (btn) {
+    btn.innerText = '🖼️ Extraindo Capas 4x5...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+  }
+
+  try {
+    const res = await fetch('/api/render-capas-4x5', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ campaignId: campaign.number })
+    });
+    
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || 'Erro ao renderizar capas');
+    }
+
+    if (btn) {
+      btn.innerText = '✅ Capas 4x5 Geradas!';
+      btn.style.background = '#00d26a';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#00d26a';
+      btn.style.opacity = '1';
+    }
+
+    alert(`✨ Sucesso! ${data.count || 0} capa(s) no formato 4x5 (Instagram) foram geradas a partir do material cru na pasta sonoplastia!`);
+
+    setTimeout(() => {
+      if (btn) {
+        btn.innerText = originalText;
+        btn.disabled = false;
+        btn.style.background = 'rgba(0,174,239,0.14)';
+        btn.style.borderColor = 'rgba(0,174,239,0.4)';
+        btn.style.color = 'var(--cyan)';
+      }
+    }, 3500);
+
+  } catch(e) {
+    if (btn) {
+      btn.innerText = originalText;
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+    alert('Erro ao renderizar capas 4x5: ' + e.message);
+  }
+};
+
