@@ -1,5 +1,18 @@
 [
   {
+    "id": "cta_05",
+    "numStr": "05",
+    "title": "[CTA 05] 🎭🎨 ESCOLHA O PRÓXIMO TEMA: MINISSÉRIE PINTADA COM SUAS CORES! 🖌️🌈",
+    "subtitle": "Vote agora e veja sua ideia ganhar vida em uma minissérie exclusiva, onde cada detalhe é inspirado pela sua criatividade!",
+    "category": "Engajamento & Interação",
+    "aspectRatio": "9:16",
+    "image": "/render/cta/05.png",
+    "created_at": "2026-07-25T21:43:12.738Z",
+    "textInImage": "SUA COR, NOSSA TELA",
+    "imagePrompt": "Create a vertical 9:16 aspect ratio poster for ChatGPT DALL-E 3 set inside a futuristic biotech laboratory with neon-lit bioluminescent fabrics and glowing genetic sequences floating in the air. The scene should feel like a blend of high fashion and cutting-edge science, with mannequins dressed in iridescent, living textiles. Center the glowing 3D neon typography text written in Portuguese: \"SUA COR, NOSSA TELA\". The text should emit a soft, colorful glow that interacts with the bioluminescent elements around it. Cinematic lighting, ultra-detailed 8k resolution, photorealistic textures, and a sense of dynamic movement in the fabrics and neon lights.",
+    "caption": "🎭🎨 **ESCOLHA O PRÓXIMO TEMA: MINISSÉRIE PINTADA COM SUAS CORES!** 🖌️🌈\n\n1️⃣ **COMENTE** sua ideia de tema para a próxima minissérie.\n2️⃣ **VOTE** nos temas mais criativos dos outros inscritos.\n3️⃣ **GANHE** a chance de ter seu tema produzido e seu nome nos créditos!\n\n🔥 **Sua criatividade merece um palco!** Participe e faça parte da história da InkVortex Brasil.\n\n📲 **Acesse nossa Bio no Mercado Livre** e fique por dentro de todas as novidades: [link da Bio]\n\n#InkVortexBrasil #SuaCorNossaTela #MinissérieInterativa #EscolhaOTema #CriatividadeSemLimites"
+  },
+  {
     "id": "cta_04",
     "numStr": "04",
     "title": "[CTA 04] 🎬🌿 ESCOLHA A PRÓXIMA TRILHA: MINISSÉRIE SELVAGEM COM A SUA VOZ! 🌍🔊",
