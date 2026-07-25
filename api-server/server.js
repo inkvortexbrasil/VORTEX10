@@ -10,8 +10,8 @@ const ENV_PATH = path.join(__dirname, '.env');
 const PORT = Number(process.env.PORT || readEnv().PORT || 8787);
 const TELEMETRY_PATH = path.join(__dirname, 'inkvortex-api-telemetry.jsonl');
 const DEFAULT_API_TIMEOUT_MS = 240000;
-const STUDIO_VERSION = '8.0';
-const ENGINE_VERSION = '3.6';
+const STUDIO_VERSION = '10.0';
+const ENGINE_VERSION = '10.0';
 const SERVER_STARTED_AT = new Date().toISOString();
 
 const DEFAULTS_ROOT = path.join(__dirname, 'defaults');
@@ -2398,6 +2398,67 @@ async function handleApi(req,res){
     return;
   }
   
+  if (req.url === '/api/render-capas-4x5' && req.method === 'POST') {
+    try {
+        const payload = await readBody(req);
+        const camp = payload.campaignId || "1";
+        const campStr = String(camp).padStart(2, '0');
+        
+        const sonoDir = path.join(ROOT, 'render', campStr, 'sonoplastia');
+        const audioLegDir = path.join(ROOT, 'render', campStr, 'áudio legendado');
+        
+        let sourceDir = sonoDir;
+        let mp4Files = [];
+        if (fs.existsSync(sonoDir)) {
+            mp4Files = fs.readdirSync(sonoDir).filter(f => f.toLowerCase().endsWith('.mp4'));
+        }
+        if (mp4Files.length === 0 && fs.existsSync(audioLegDir)) {
+            sourceDir = audioLegDir;
+            mp4Files = fs.readdirSync(audioLegDir).filter(f => f.toLowerCase().endsWith('.mp4'));
+        }
+        
+        if (mp4Files.length === 0) {
+             send(res, 400, { ok: false, error: 'Nenhum vídeo MP4 encontrado na pasta sonoplastia ou áudio legendado.' });
+             return;
+        }
+
+        const generatedFiles = [];
+        const { execSync } = require('child_process');
+
+        if (!fs.existsSync(sonoDir)) fs.mkdirSync(sonoDir, { recursive: true });
+        if (!fs.existsSync(audioLegDir)) fs.mkdirSync(audioLegDir, { recursive: true });
+
+        for (const mp4File of mp4Files) {
+            const mp4Path = path.join(sourceDir, mp4File);
+            const baseName = path.parse(mp4File).name.replace(/_?[Ll]egendado/gi, '').trim();
+
+            const out1x1Name = `${baseName}_CAPA_1x1.png`;
+            const out4x5Name = `${baseName}_CAPA_4x5.png`;
+
+            const out1x1Sono = path.join(sonoDir, out1x1Name);
+            const out4x5Sono = path.join(sonoDir, out4x5Name);
+            const out4x5Leg = path.join(audioLegDir, out4x5Name);
+
+            const cmd1x1 = `ffmpeg -y -ss 00:00:00.5 -i "${mp4Path}" -vframes 1 "${out1x1Sono}"`;
+            try { execSync(cmd1x1, { stdio: 'ignore' }); } catch(e) {}
+
+            const cmd4x5 = `ffmpeg -y -ss 00:00:00.5 -i "${mp4Path}" -vframes 1 -filter_complex "[0:v]scale=1080:1350:force_original_aspect_ratio=increase,crop=1080:1350,gblur=sigma=40[bg]; [0:v]scale=1080:1080[fg]; [bg][fg]overlay=0:135" "${out4x5Sono}"`;
+            try {
+                execSync(cmd4x5, { stdio: 'ignore' });
+                if (fs.existsSync(out4x5Sono)) {
+                    fs.copyFileSync(out4x5Sono, out4x5Leg);
+                    generatedFiles.push(out4x5Name);
+                }
+            } catch(e) {
+                console.error('Erro ao renderizar capa 4x5:', e);
+            }
+        }
+
+        send(res, 200, { ok: true, count: generatedFiles.length, files: generatedFiles });
+    } catch(err) { sendApiError(res, err); }
+    return;
+  }
+
   if (req.url === '/api/render-audio-subs' && req.method === 'POST') {
     try {
         const payload = await readBody(req);
