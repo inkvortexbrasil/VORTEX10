@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-iv-stage-active="true">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>inkVortex 10.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css?v=214">
+  <link rel="stylesheet" href="css/layout.css?v=214">
+  <link rel="stylesheet" href="css/components.css?v=214">
+  <link rel="stylesheet" href="css/main.css?v=214">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body class="vortexAppShell dark-theme">
+  <!-- Topbar Central -->
+  <header class="vortexTopbar">
+    <div class="vortexGlobalActions" style="display: flex; align-items: center; gap: 16px;">
+      <div class="logoBox" style="display: flex; align-items: center;">
+        <img id="mainLogo" src="/api/logo" alt="InkVortex Logo">
+      </div>
+      <button id="btnBackToDashboard" class="actionBtn" style="display: none; padding: 8px 16px; border-radius: 8px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); font-weight: bold; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0;" onclick="window.switchMultiverseRoom('multiverseWelcome', null)" onmouseover="this.style.background='var(--brandGrad)'; this.style.borderColor='transparent';" onmouseout="this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.25)';">⬅ VOLTAR</button>
+      <div style="position: relative;">
+        <button id="btnChangeWallpaper" class="actionBtn" style="padding: 8px 16px; border-radius: 8px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); font-weight: bold; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0;" onclick="window.toggleDropdown('dropdownStage')" onmouseover="this.style.background='var(--brandGrad)'; this.style.borderColor='transparent';" onmouseout="this.style.background='transparent'; this.style.borderColor='rgba(255,255,255,0.25)';">🌌 MULTIVERSO</button>
+        <div id="dropdownStage" class="vortexDropdown" style="display: none; width: 350px; left: 0; top: 100%; margin-top: 10px;">
+          <div id="stageGrid" class="stageGrid" style="max-height: 300px; overflow-y: auto; padding-right: 8px;"></div>
+        </div>
+      </div>
+    </div>
+    
+    <nav class="vortexStageNav" style="display: none;">
+      <!-- 2 Etapas Simples -->
+      <button class="stageTab" data-stage="ideation">
+        <strong>01</strong> CENTRO DE COMANDO <span>Inteligência Editorial</span>
+      </button>
+      <button class="stageTab" data-stage="studio">
+        <strong>02</strong> ESTÚDIO <span>Produção Criativa</span>
+      </button>
+      <button class="stageTab" data-stage="library">
+        <strong>03</strong> BIBLIOTECA <span>Histórico e Arquivo</span>
+      </button>
+      <button class="stageTab" data-stage="expansion">
+        <strong>04</strong> MULTIVERSO DA PRODUÇÃO <span>Expansão Multicanal</span>
+      </button>
+    </nav>
+    
+    <!-- Título Fixo Padronizado de Todos os Multiversos (No Topo Fixo) -->
+    <div id="topbarMultiverseTitle" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; pointer-events: none;">
+      <h1 id="topbarTitle" style="font-family: var(--uiRounded); font-size: 1.45rem; font-weight: 800; color: #fff; margin: 0; letter-spacing: 0.5px; text-shadow: 0 0 20px rgba(0, 174, 239, 0.5); text-align: center; line-height: 1.2;"></h1>
+      <p id="topbarSubtitle" style="color: var(--ivTextSecondary); font-size: 0.82rem; margin: 2px 0 0 0; font-family: var(--uiText); text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.8); max-width: 650px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></p>
+    </div>
+
+    <div class="vortexGlobalActions" style="display: flex; gap: 8px; align-items: center;">
+        <!-- Tipografia Dropdown -->
+      <div style="position: relative; margin-right: 8px;">
+        <button class="iconBtn" id="btnApiConfig" title="Chave da API" onclick="document.getElementById('modalApiConfig').style.display='flex'">🔑 API</button>
+      </div>
+      <div style="position: relative;">
+        <button class="iconBtn" id="btnFonts" title="Tipografia" onclick="window.toggleDropdown('dropdownFonts')">Aa</button>
+        <div id="dropdownFonts" class="vortexDropdown" style="display: none; min-width: 340px;">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+            <div style="width: 48px; height: 48px; border-radius: 12px; background: var(--brandGrad); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">Aa</div>
+            <div>
+              <h3 style="margin: 0 0 4px 0; font-family: var(--uiRounded); color: #fff; font-size: 1.3rem;">Estúdio de Tipografia</h3>
+              <span style="color: var(--cyan); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Aplicado a todo o estúdio</span>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 24px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+              <span style="color: #fff; font-size: 0.95rem; font-weight: 600;">Escala de Zoom</span>
+              <span style="color: var(--cyan); font-size: 0.9rem; font-weight: bold;" id="fontSizeDisplay">100%</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 16px; background: rgba(0,0,0,0.4); padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);">
+              <button class="actionBtn" style="background: none; border: none; color: #fff; font-size: 1.1rem; cursor: pointer; padding: 4px; opacity: 0.8;" onclick="event.stopPropagation(); window.adjustFontSize(-0.1)" title="Reduzir Letra">A-</button>
+              <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+                 <button class="actionBtn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 0.8rem; cursor: pointer; padding: 6px 12px; border-radius: 6px; font-weight: bold;" onclick="event.stopPropagation(); window.adjustFontSize(1)" title="Restaurar Tamanho">PADRÃO</button>
+              </div>
+              <button class="actionBtn" style="background: none; border: none; color: #fff; font-size: 1.3rem; font-weight: bold; cursor: pointer; padding: 4px; opacity: 0.8;" onclick="event.stopPropagation(); window.adjustFontSize(0.1)" title="Aumentar Letra">A+</button>
+            </div>
+          </div>
+
+          <h4 style="margin: 0 0 12px 0; color: #fff; font-size: 0.95rem; font-weight: 600; padding-left: 4px;">Acervo de Fontes Locais</h4>
+          <div id="fontsList" style="display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; padding-right: 8px;">
+            <button class="actionBtn" style="padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; color: #fff; font-family: 'DMSans', sans-serif; font-size: 1.1rem; text-align: left;" onclick="event.stopPropagation(); window.applyFont('DMSans', 'DMSans', 'DM Sans', this)">
+              <span>DM Sans</span><span style="font-size: 0.8rem; opacity: 0.7;">Aplicar</span>
+            </button>
+            <button class="actionBtn" style="padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; color: #fff; font-family: 'Inter', sans-serif; font-size: 1.1rem; text-align: left;" onclick="event.stopPropagation(); window.applyFont('Inter', 'Inter', 'Inter', this)">
+              <span>Inter</span><span style="font-size: 0.8rem; opacity: 0.7;">Aplicar</span>
+            </button>
+            <button class="actionBtn" style="padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; color: #fff; font-family: 'Manrope', sans-serif; font-size: 1.1rem; text-align: left;" onclick="event.stopPropagation(); window.applyFont('Manrope', 'Manrope', 'Manrope', this)">
+              <span>Manrope</span><span style="font-size: 0.8rem; opacity: 0.7;">Aplicar</span>
+            </button>
+            <button class="actionBtn" style="padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; color: #fff; font-family: 'NotoSans', sans-serif; font-size: 1.1rem; text-align: left;" onclick="event.stopPropagation(); window.applyFont('NotoSans', 'NotoSans', 'Noto Sans', this)">
+              <span>Noto Sans</span><span style="font-size: 0.8rem; opacity: 0.7;">Aplicar</span>
+            </button>
+            <button class="actionBtn" style="padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; color: #fff; font-family: 'PlusJakartaSans', sans-serif; font-size: 1.1rem; text-align: left;" onclick="event.stopPropagation(); window.applyFont('PlusJakartaSans', 'PlusJakartaSans', 'Plus Jakarta', this)">
+              <span>Plus Jakarta Sans</span><span style="font-size: 0.8rem; opacity: 0.7;">Aplicar</span>
+            </button>
+            <button class="actionBtn" style="padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; color: #fff; font-family: 'SourceSans3', sans-serif; font-size: 1.1rem; text-align: left;" onclick="event.stopPropagation(); window.applyFont('SourceSans3', 'SourceSans3', 'Source Sans 3', this)">
+              <span>Source Sans 3</span><span style="font-size: 0.8rem; opacity: 0.7;">Aplicar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Sistema Dropdown -->
+      <div style="position: relative;">
+        <button class="actionBtn" id="btnSystem" style="padding: 10px 16px; border: 1px solid rgba(255, 255, 255, 0.2);" onclick="window.toggleDropdown('dropdownSystem')">⚙️ SISTEMA</button>
+        <div id="dropdownSystem" class="vortexDropdown" style="display: none; min-width: 250px; right: 0;">
+          <h3 style="margin: 0 0 16px 0; font-family: var(--uiRounded); color: #fff;">Opções do Sistema</h3>
+          <p style="color: var(--ivTextSecondary); margin-bottom: 16px; font-size: 0.9rem;">Gerencie o banco de dados do Vortex 10.0</p>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <button class="actionBtn" style="width: 100%; justify-content: flex-start; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.15); font-family: var(--uiText); font-size: 0.95rem; font-weight: 500;" onclick="document.getElementById('importBackupFile').click(); document.getElementById('dropdownSystem').style.display='none';">📥 Importar Backup (.json)</button>
+            <button class="actionBtn" id="btnExport" style="width: 100%; justify-content: flex-start; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.15); font-family: var(--uiText); font-size: 0.95rem; font-weight: 500;">📤 Exportar Backup</button>
+            <button class="actionBtn" id="btnReset" style="width: 100%; justify-content: flex-start; padding: 12px 16px; border: 1px solid rgba(255,107,107,0.4); color: #ff6b6b; font-family: var(--uiText); font-size: 0.95rem; font-weight: 500;">⚠️ Resetar Sistema</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="vortexVersionBadge">
+        <span>VORTEX</span>
+        <strong>10.0</strong>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- PÁGINA 3: BIBLIOTECA (Histórico) -->
+  <div id="pageLibrary" class="vortexPage" style="display: none; position: fixed; inset: 0; background: transparent; z-index: 50; pointer-events: auto;">
+    
+    <!-- Header FIXO com os 3 Botões no topo -->
+    <div id="libraryHeaderFixed" style="position: fixed; left: 50vw; transform: translateX(-50%); top: 95px; width: 1000px; max-width: 90vw; z-index: 70; display: flex; flex-direction: column; align-items: center; text-align: center;">
+      <!-- Os 3 Botões de Filtro FIXOS -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px;">
+        <button class="actionBtn" id="btnFilterAll" onclick="window.setLibraryFilter('all')" style="background: var(--brandGrad); color: #fff; border: 1px solid transparent; font-weight: bold; padding: 8px 20px; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,174,239,0.4); font-size: 0.85rem;">📋 TODAS (01...)</button>
+        <button class="actionBtn" id="btnFilterPending" onclick="window.setLibraryFilter('pending')" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.18); font-weight: normal; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-size: 0.85rem;">⏳ NÃO GERADAS (PENDENTES)</button>
+        <button class="actionBtn" id="btnFilterCompleted" onclick="window.setLibraryFilter('completed')" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.18); font-weight: normal; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-size: 0.85rem;">⭐ GERADAS (COMPLETAS)</button>
+      </div>
+    </div>
+
+    <!-- Área de Cards ROLÁVEL estendida até o limite inferior da tela (top: 145px) -->
+    <div id="libraryGridContainer" style="position: fixed; left: 50vw; transform: translateX(-50%); top: 145px; bottom: 20px; width: 1000px; max-width: 90vw; overflow-y: auto; z-index: 60; padding-right: 6px; mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);">
+      <div class="subjectsGrid" id="libraryGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px 32px; padding-bottom: 50px;">
+        <!-- As campanhas serão injetadas aqui -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 4: MULTIVERSO (Expansão e Ecossistema) -->
+  
+        <!-- Orbits: 7 Multiverso Rooms on the LEFT side (stretched from top to bottom) -->
+        <div id="orbitLeft" style="position: fixed; left: 24px; top: 100px; bottom: 25px; width: 330px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; z-index: 60; pointer-events: auto !important;">
+          <!-- 1. Multiverso Editorial -->
+          <button id="btnNavSocial" class="actionBtn" style="padding: 12px 18px; display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; flex: 1;" onclick="window.openSocialMedia()">
+            <span style="font-size: 1.9rem; flex-shrink: 0;">📱</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong style="color: #fff; font-size: 1.15rem; font-family: var(--uiRounded); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">Multiverso Editorial</strong>
+              <span class="room-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">Legendas Instagram/LinkedIn</span>
+            </div>
+          </button>
+          
+          <!-- 2. Multiverso Visual -->
+          <button id="btnNavStoryboard" class="actionBtn" style="padding: 12px 18px; display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; flex: 1;" onclick="window.openStoryboard()">
+            <span style="font-size: 1.9rem; flex-shrink: 0;">🎬</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong style="color: #fff; font-size: 1.15rem; font-family: var(--uiRounded); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">Multiverso Visual</strong>
+              <span class="room-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">Storyboard Visual Interativo</span>
+            </div>
+          </button>
+          
+          <!-- 3. Multiverso Auditivo -->
+          <button id="btnNavAudio" class="actionBtn" style="padding: 12px 18px; display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; flex: 1;" onclick="window.openAudioRoom()">
+            <span style="font-size: 1.9rem; flex-shrink: 0;">🎧</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong style="color: #fff; font-size: 1.15rem; font-family: var(--uiRounded); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">Multiverso Auditivo</strong>
+              <span class="room-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">Roteiros Musicais IA</span>
+            </div>
+          </button>
+
+          <!-- 4. Multiverso Biblioteca -->
+          <button id="btnNavLibrary" class="actionBtn" style="padding: 12px 18px; display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; flex: 1;" onclick="window.openLibraryRoom()">
+            <span style="font-size: 1.9rem; flex-shrink: 0;">📚</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong style="color: #fff; font-size: 1.15rem; font-family: var(--uiRounded); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">Multiverso Biblioteca</strong>
+              <span class="room-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">Histórico e Arquivo Geral</span>
+            </div>
+          </button>
+          
+          <!-- 5. Multiverso Audiovisual -->
+          <button id="btnNavFlow" class="actionBtn" style="padding: 12px 18px; display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; flex: 1;" onclick="window.openFlowRoom()">
+            <span style="font-size: 1.9rem; flex-shrink: 0;">🌊</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong style="color: #fff; font-size: 1.15rem; font-family: var(--uiRounded); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">Multiverso Audiovisual</strong>
+              <span class="room-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">Roteiro Master Cinemático</span>
+            </div>
+          </button>
+
+          <!-- 6. Multiverso Documentários -->
+          <button id="btnNavDocumentarios" class="actionBtn" style="padding: 12px 18px; display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; flex: 1;" onclick="window.openDocumentarios()">
+            <span style="font-size: 1.9rem; flex-shrink: 0;">🎥</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong style="color: #fff; font-size: 1.15rem; font-family: var(--uiRounded); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">Multiverso Documentários</strong>
+              <span class="room-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">Documentários Longos (YouTube)</span>
+            </div>
+          </button>
+
+          <!-- 7. Multiverso Comercial -->
+          <button id="btnNavComercial" class="actionBtn" style="padding: 12px 18px; display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; flex: 1;" onclick="window.openComercialRoom()">
+            <span style="font-size: 1.9rem; flex-shrink: 0;">📢</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong style="color: #fff; font-size: 1.15rem; font-family: var(--uiRounded); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">Multiverso Comercial</strong>
+              <span class="room-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">Campanhas CTA & Engajamento</span>
+            </div>
+          </button>
+        </div>
+
+        <div id="orbitRight" style="display: none;"></div>
+
+        <style>
+          #multiverseWelcome {
+            background: transparent;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          #orbitLeft .actionBtn {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.22) !important;
+            border-radius: 14px !important;
+            box-shadow: none !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          }
+          #orbitLeft .actionBtn:hover {
+            background: rgba(0, 174, 239, 0.15) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-color: var(--cyan) !important;
+            box-shadow: 0 0 20px rgba(0, 174, 239, 0.35) !important;
+            transform: translateX(4px) scale(1.02) !important;
+            color: #fff !important;
+          }
+          #orbitLeft .actionBtn.active {
+            background: rgba(0, 174, 239, 0.25) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1.5px solid var(--cyan) !important;
+            box-shadow: 0 0 25px rgba(0, 174, 239, 0.5) !important;
+            color: #fff !important;
+          }
+        </style>
+        <!-- Tela Inicial Multiverso (Estrutura 3 Colunas) -->
+
+        <div id="multiverseWelcome" style="display: flex; position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 50; padding: 0; background: transparent; pointer-events: none;">
+          
+          <!-- Coluna Central: Centro de Comando (Posicionado no Centro Absoluto 50vw sobre o Buraco Negro) -->
+          <div id="multiverseControlPanel" style="position: fixed; left: 50vw; transform: translateX(-50%); width: 530px; top: 140px; bottom: 20px; display: flex; flex-direction: column; overflow-y: auto; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 174, 239, 0.25); backdrop-filter: blur(1px); border-radius: 18px; padding: 16px 22px; box-sizing: border-box; z-index: 60; pointer-events: auto; box-shadow: inset 0 0 15px rgba(0,174,239,0.06), 0 0 20px rgba(0,174,239,0.1);">
+            <div class="ideationContainer" style="padding: 0; width: 100%;">
+              <header class="ideationHeader" style="text-align: center; margin-bottom: 0; background: transparent; padding: 0; width: 100%;">
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 0; width: 100%; box-sizing: border-box;">
+                  <!-- SEÇÃO 1: CRIAR NOVA -->
+                  <input type="text" id="customBriefInput" placeholder="Assunto para CRIAR nova minissérie..." style="width:100%;box-sizing:border-box;padding:9px 11px;background:rgba(255,255,255,0.04);border:1px solid rgba(0,174,239,0.3);color:#fff;font-family:var(--uiText);border-radius:10px;outline:none;font-size:0.85rem;" onkeydown="if(event.key === 'Enter') window.handleCreateManualSubject()">
+                  <div style="display:flex;gap:6px;width:100%;">
+                    <button id="btnCreateManual" class="actionBtn" onclick="window.handleCreateManualSubject()" style="background:rgba(0,174,239,0.15);color:var(--cyan);border:1px solid rgba(0,174,239,0.4);padding:8px 6px;border-radius:10px;font-weight:bold;font-size:0.78rem;cursor:pointer;flex:1;white-space:nowrap;">➕ CRIAR 1</button>
+                    <button id="btnGenerateSubjects" class="actionBtn" onclick="window.handleGenerateSubjects()" style="background:var(--brandGrad);color:#fff;border:none;padding:8px 6px;border-radius:10px;font-weight:bold;font-size:0.78rem;cursor:pointer;flex:1.4;white-space:nowrap;">✨ EXPANDIR (IA)</button>
+                  </div>
+                  
+                  <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 2px 0;"></div>
+                  
+                  <!-- SEÇÃO 2: ACESSAR EXISTENTE -->
+                  <div style="display: flex; gap: 6px; width: 100%; align-items: center; box-sizing: border-box;">
+                    <input type="number" id="customSubjectInput" placeholder="Nº Minissérie..." style="flex:1;min-width:0;box-sizing:border-box;padding:9px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(0,174,239,0.3);color:#fff;font-family:var(--uiText);border-radius:10px;outline:none;font-size:0.88rem;font-weight:bold;text-align:center;" onkeydown="if(event.key === 'Enter') window.createCustomSubject()">
+                    <button class="actionBtn" id="btnCustomSubject" onclick="window.createCustomSubject()" style="background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.18);padding:9px 12px;border-radius:10px;font-weight:bold;font-size:0.82rem;cursor:pointer;flex-shrink:0;white-space:nowrap;">🔍 Acessar</button>
+                  </div>
+                </div>
+              </header>
+
+              <div id="activeCampaignPanel" style="display: none; flex-direction: column; gap: 16px; width: 100%;">
+                <!-- Dynamic active campaign info and tabs injected here by UI.js -->
+              </div>
+
+              <div class="subjectsGrid" id="subjectsGrid" style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+                <!-- Os assuntos/séries aparecerão aqui -->
+              </div>
+            </div>
+          </div>
+          
+          <!-- Coluna Direita: Visualização de Legendas / Prompts (Posicionado no Canto Direito da Tela) -->
+          <div id="multiversePromptsArea" style="position: fixed; right: 28px; width: 480px; top: 100px; bottom: 25px; display: none; flex-direction: column; min-height: 0; z-index: 60; pointer-events: auto;"></div>
+        </div>
+
+        <!-- Área da Sala de Shorts (50s) -->
+        <div id="shortsView" class="vortexPage" style="display: none; flex-direction: column; overflow: hidden; align-items: center; position: relative; background: transparent;">
+
+          <h2 style="color: #fff; font-family: var(--uiRounded); margin: 0 0 16px 0; font-size: 2.5rem; text-align: center;">⚡ Máquina de Shorts (50s)</h2>
+          <p style="color: var(--ivTextSecondary); margin-bottom: 40px; text-align: center; max-width: 600px; font-size: 1.1rem; line-height: 1.5;">
+            Engenharia de retenção hiperdinâmica. Insira a série, gere as imagens com o Gemini, gere o clipe no Flow, e monte o vídeo final num clique.
+          </p>
+          
+          <div style="display: flex; gap: 32px; width: 100%; max-width: 1100px; padding: 0 32px;">
+            <!-- Painel Esquerdo: Telemetria / Validação -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 16px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px;">
+              <div style="display: flex; flex-direction: column; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px;">
+                <h3 style="color: #fff; margin: 0; font-size: 1.3rem;">📡 Telemetria da Série</h3>
+                <select id="shortsSeriesSelect" class="formInput" style="width: 100%; font-size: 1rem; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--cyan); color: #fff; border-radius: 8px; font-weight: bold; outline: none; cursor: pointer;" onchange="window.updateTelemetry()">
+                  <!-- Populado via JS -->
+                </select>
+              </div>
+
+              <div id="telemetryChecklist" style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+                <div class="telemetry-item" id="tel-gpt">
+                  <span class="icon">⏳</span>
+                  <div class="info">
+                    <strong>Imagens Estáticas (Com Título)</strong>
+                    <small>Esperado: 5 arquivos (.png) na pasta /gpt</small>
+                  </div>
+                </div>
+                <div class="telemetry-item" id="tel-gemini">
+                  <span class="icon">⏳</span>
+                  <div class="info">
+                    <strong>Imagens Dinâmicas (Movimento)</strong>
+                    <small>Esperado: 5 arquivos (.png) na pasta /gemini</small>
+                  </div>
+                </div>
+                <div class="telemetry-item" id="tel-flow">
+                  <span class="icon">⏳</span>
+                  <div class="info">
+                    <strong>Vídeo Master (Manual)</strong>
+                    <small>Esperado: 1 arquivo (.mp4) na pasta /flow</small>
+                  </div>
+                </div>
+                <div class="telemetry-item" id="tel-audio">
+                  <span class="icon">⏳</span>
+                  <div class="info">
+                    <strong>Trilha Sonora</strong>
+                    <small>Esperado: 1 arquivo (.mp3) na pasta /sonoplastia</small>
+                  </div>
+                </div>
+                <div class="telemetry-item" id="tel-cta">
+                  <span class="icon">⏳</span>
+                  <div class="info">
+                    <strong>CTAs Globais</strong>
+                    <small>Esperado: 3+ arquivos (.png) na pasta /cta</small>
+                  </div>
+                </div>
+                <div class="telemetry-item" id="tel-logo">
+                  <span class="icon">⏳</span>
+                  <div class="info">
+                    <strong>Logo Master</strong>
+                    <small>Esperado: 1 arquivo (.mp4) na pasta /logo</small>
+                  </div>
+                </div>
+              </div>
+
+              <div id="telemetryStatus" style="margin-top: auto; padding: 16px; border-radius: 8px; text-align: center; font-weight: bold; background: rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.3); color: #ff4d4d; letter-spacing: 1px;">
+                INCOMPLETO - AGUARDANDO ASSETS
+              </div>
+            </div>
+
+            <!-- Painel Direito: Ações / Operação -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 24px;">
+              
+              <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+                
+                <div>
+                  <h3 style="color: #fff; margin: 0 0 8px 0; font-size: 1.3rem;">Forjar Insumos Visuais</h3>
+                  <p style="color: var(--ivTextSecondary); margin: 0; font-size: 0.95rem;">Gera as 10 imagens verticais via Gemini e injeta nas pastas gpt (5) e gemini (5).</p>
+                </div>
+                
+                <div id="promptsPreviewBox" style="width: 100%; height: 120px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px; overflow-y: auto; font-family: monospace; font-size: 0.85rem; color: var(--ivTextSecondary); display: flex; flex-direction: column; gap: 8px;">
+                  <em>Selecione uma minissérie ao lado para visualizar os prompts que serão enviados.</em>
+                </div>
+
+                <button id="btnGenerateShortsInputs" class="actionBtn" style="background: var(--brandGrad); border: none; font-weight: bold; font-size: 1.1rem; padding: 16px; width: 100%; opacity: 0.5; pointer-events: none;" onclick="window.generateShortsInputs()">1. GERAR IMAGENS 🌌</button>
+              </div>
+
+              <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px; flex: 1;">
+                <div>
+                  <h3 style="color: #fff; margin: 0 0 8px 0; font-size: 1.3rem;">Fila de Renderização (FFmpeg)</h3>
+                  <p style="color: var(--ivTextSecondary); margin: 0; font-size: 0.95rem;">Costura estática (Modo Canva) ultra-rápida. Só renderiza o que tem sinal verde na Telemetria.</p>
+                </div>
+                
+                <!-- Status Bar -->
+                <div id="shortsStatusBox" style="width: 100%; background: rgba(0,0,0,0.5); padding: 16px; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; display: none; flex-direction: column;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <strong id="shortsStatusTitle" style="color: #fff; font-size: 0.9rem;">PROCESSANDO</strong>
+                    <span id="shortsStatusPercent" style="color: var(--brandPrimary); font-weight: bold;">0%</span>
+                  </div>
+                  <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
+                    <div id="shortsProgressBar" style="width: 0%; height: 100%; background: var(--brandGrad); transition: width 0.3s ease;"></div>
+                  </div>
+                  <div id="shortsStatusLog" style="color: var(--ivTextSecondary); font-size: 0.85rem; font-family: monospace;">Aguardando...</div>
+                </div>
+
+                <div style="margin-top: auto;">
+                  <button id="btnAssembleShorts" class="actionBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; font-weight: bold; font-size: 1.1rem; padding: 16px; width: 100%; opacity: 0.5; pointer-events: none;" onclick="window.assembleShorts()">2. RENDERIZAR SÉRIE ⚡</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Área da Sala de Montagem (Storyboard) -->
+        <div id="storyboardView" class="vortexPage" style="display: none; flex-direction: column; overflow: hidden; background: transparent;">
+          <div id="storyboardGrid" style="display: flex; flex-direction: column; gap: 32px; overflow: hidden; padding-right: 12px; flex-grow: 1; min-height: 0; margin: 0 auto; width: 100%;">
+            <!-- Cards do Storyboard serão gerados aqui -->
+          </div>
+        </div>
+
+        <!-- Área da Sala Social Media (Carrossel) -->
+        <div id="socialMediaView" class="vortexPage" style="display: none; flex-direction: column; overflow: hidden; background: transparent;">
+          <div id="socialMediaGrid" style="display: flex; flex-direction: column; gap: 32px; overflow: hidden; padding-right: 12px; flex-grow: 1; min-height: 0; margin: 0 auto; width: 100%;">
+            <!-- Cards do Social Media serão gerados aqui -->
+          </div>
+        </div>
+
+        <!-- Área da Sala do Flow -->
+        <div id="flowRoomView" class="vortexPage" style="display: none; flex-direction: column; overflow: hidden; background: transparent;">
+          <div id="flowRoomGrid" style="display: flex; flex-direction: column; gap: 24px; flex: 1; overflow: hidden; padding-right: 12px; min-height: 0; position: relative; margin: 0 auto; width: 100%;">
+            <!-- Left: Video Player, Right: Script -->
+          </div>
+        </div>
+
+        <!-- Área da Sala de Sonoplastia -->
+        <div id="audioRoomView" class="vortexPage" style="display: none; width: 100%; flex-direction: column; height: 100%; overflow: hidden; background: transparent;">
+          <div id="audioRoomContent" style="display: flex; align-items: stretch; flex-grow: 1; min-height: 0; width: 100%; overflow: hidden;">
+            <!-- Renderizado via audio.js -->
+          </div>
+        </div>
+
+        <!-- Área do Multiverso Documentários (Réplica Exata 1:1 do Multiverso Biblioteca) -->
+        <div id="documentariosRoomView" class="vortexPage" style="display: none; position: fixed; inset: 0; background: transparent; z-index: 50; pointer-events: auto;">
+          
+          <!-- Header FIXO com os Botões no topo -->
+          <div id="docHeaderFixed" style="position: fixed; left: 50vw; transform: translateX(-50%); top: 95px; width: 1000px; max-width: 90vw; z-index: 70; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div id="docHeaderButtons" style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px;">
+              <button class="actionBtn" id="btnDocTabProd" onclick="window.switchDocumentariosTab('production')" style="background: var(--brandGrad); color: #fff; border: 1px solid transparent; font-weight: bold; padding: 8px 20px; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,174,239,0.4); font-size: 0.85rem;">🎬 ESTEIRA DE DOCUMENTÁRIOS</button>
+              <button class="actionBtn" id="btnDocTabLib" onclick="window.switchDocumentariosTab('library')" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.18); font-weight: normal; padding: 8px 20px; border-radius: 10px; cursor: pointer; font-size: 0.85rem;">📚 CATALOGADOS (0)</button>
+            </div>
+          </div>
+
+          <!-- Área de Cards ROLÁVEL Flutuante (top: 145px; bottom: 20px - Idêntico ao libraryGridContainer) -->
+          <div id="docGridContainer" style="position: fixed; left: 50vw; transform: translateX(-50%); top: 145px; bottom: 20px; width: 1000px; max-width: 90vw; overflow-y: auto; z-index: 60; padding-right: 6px; mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 94%, transparent 100%);">
+            <div id="documentariosRoomContent" style="width: 100%; padding-bottom: 50px;">
+              <!-- Renderizado via documentarios.js -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sala 7: Multiverso Comercial (CTA & Engajamento) -->
+        <div id="comercialView" class="vortexPage" style="display: none; position: fixed; inset: 0; background: transparent; z-index: 50; pointer-events: auto;">
+          
+          <!-- Header FIXO da Sala Comercial (Centralizado entre o menu lateral e a borda direita) -->
+          <div style="position: fixed; left: calc(354px + (100vw - 354px) / 2); transform: translateX(-50%); top: 85px; width: calc(100vw - 420px); max-width: 1200px; z-index: 70; display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 16px; width: 100%; justify-content: space-between;">
+              <div style="text-align: left; flex: 1; min-width: 0;">
+                <h2 style="color: #fff; font-family: var(--uiRounded); margin: 0 0 2px 0; font-size: 1.5rem; font-weight: 900; text-shadow: 0 0 20px rgba(0,174,239,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">📢 Multiverso Comercial (CTA & Engajamento)</h2>
+                <p style="color: rgba(255,255,255,0.75); margin: 0; font-size: 0.8rem; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Geração de Prompts 9:16 para ChatGPT (DALL-E 3) + Legendas com Mistral Large em 1 clique.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estrutura Flutuante de 2 Colunas (top: 155px; bottom: 25px; Película Éter Cristalina Ultratransparente) -->
+          <div style="position: fixed; left: calc(354px + (100vw - 354px) / 2); transform: translateX(-50%); top: 155px; bottom: 25px; width: calc(100vw - 420px); max-width: 1200px; display: flex; gap: 24px; z-index: 60; pointer-events: auto;">
+            
+            <!-- Coluna Esquerda: Banco de Dados de Cartões CTA -->
+            <div style="width: 440px; flex-shrink: 0; display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 174, 239, 0.25); backdrop-filter: blur(1px); box-shadow: inset 0 0 15px rgba(0, 174, 239, 0.05); border-radius: 18px; padding: 18px; box-sizing: border-box;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 10px; margin-bottom: 12px;">
+                <span style="color: #fff; font-family: var(--uiRounded); font-size: 1.05rem; font-weight: 800; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">📂 Banco de Dados CTA</span>
+                <button class="actionBtn" style="background: rgba(0,174,239,0.18); color: var(--cyan); border: 1px solid rgba(0,174,239,0.4); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s;" onclick="window.scanCtaWithAi(this)" title="Escaneia novas imagens na pasta render/cta e lê com IA">
+                  🔄 RASTREAR NOVAS CTAS (IA)
+                </button>
+              </div>
+              <div id="ctaGridList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px;">
+                <!-- Lista de CTAs injetada dinamicamente pelo comercial.js -->
+              </div>
+            </div>
+
+            <!-- Coluna Direita: Legenda Comercial & Ações -->
+            <div id="ctaDetailsArea" style="flex: 1; display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 174, 239, 0.25); backdrop-filter: blur(1px); box-shadow: inset 0 0 15px rgba(0, 174, 239, 0.05); border-radius: 18px; padding: 20px; box-sizing: border-box;">
+              <!-- Detalhes e Legenda Injetados pelo comercial.js -->
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+  <input type="file" id="importBackupFile" style="display: none;" accept=".json">
+
+
+
+
+  <!-- MODAL DE CONFIGURAÇÃO DE API -->
+  <div class="modal-overlay" id="modalApiConfig" style="display: none;">
+    <div class="modal-content" style="max-width: 500px; width: 90%; background: #111; border: 1px solid rgba(255,255,255,0.1);">
+      <div style="padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px;">
+        <div style="font-size: 1.5rem;">🔑</div>
+        <h2 style="color: #fff; margin: 0; font-family: var(--uiRounded);">Central de APIs (Cofre)</h2>
+      </div>
+      <div style="padding: 24px;">
+        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 16px;">
+          Insira suas chaves de acesso. Elas serão salvas nativamente no Cofre do Servidor (arquivo .env) para uso em toda a plataforma.
+        </p>
+        <label style="display: block; color: var(--ivTextSecondary); margin-bottom: 8px; font-size: 0.9rem;">Chave da API Mistral (Textos e Roteiros)</label>
+        <input type="text" id="inputMistralKey" placeholder="Carregando..." style="width: 100%; margin-bottom: 20px; padding: 12px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: var(--uiText); border-radius: 8px; outline: none; font-size: 1rem; -webkit-text-security: disc;">
+        
+        <label style="display: block; color: var(--ivTextSecondary); margin-bottom: 8px; font-size: 0.9rem;">Chave da API Gemini (Imagens e Visão)</label>
+        <input type="text" id="inputGeminiKey" placeholder="Carregando..." style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: var(--uiText); border-radius: 8px; outline: none; font-size: 1rem; -webkit-text-security: disc;">
+      </div>
+      <div style="padding: 16px 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-end; gap: 12px; background: rgba(0,0,0,0.4);">
+        <button class="actionBtn" onclick="document.getElementById('modalApiConfig').style.display='none'" style="border: 1px solid rgba(255,255,255,0.15); background: transparent;">CANCELAR</button>
+        <button class="actionBtn" id="btnSaveApiKey" style="background: var(--brandGrad); color: #fff; font-weight: bold; border: none;">SALVAR CHAVES</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE LEITURA EXPANDIDA -->
+  <div class="modal-overlay" id="modalRead" style="display: none;">
+    <div class="modal-content" style="max-width: 900px; width: 90%; max-height: 90vh; display: flex; flex-direction: column; padding: 0;">
+      <div style="padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4);">
+        <h2 id="modalReadTitle" style="color: var(--cyan); margin: 0; font-family: var(--uiRounded);">Modo Leitura</h2>
+        <div id="modalGptToggles" style="display: none; gap: 12px; align-items: center;">
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: #fff; font-weight: bold;">
+            <input type="radio" name="gptType" value="off" checked> OFF
+          </label>
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: #fff; font-weight: bold;">
+            <input type="radio" name="gptType" value="on"> ON
+          </label>
+        </div>
+        <span class="badge" id="modalReadBadge" style="background: rgba(0, 210, 106, 0.2); color: #00d26a; display: none;">COPIADO</span>
+      </div>
+      <div style="padding: 24px; flex-grow: 1; overflow-y: auto;">
+        <textarea id="modalReadContent" readonly spellcheck="false" style="width: 100%; min-height: 400px; height: 100%; background: transparent; border: none; color: #fff; font-family: var(--uiText); font-size: 1.1rem; line-height: 1.6; resize: none; outline: none;"></textarea>
+      </div>
+      <div style="padding: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-end; gap: 16px; background: rgba(0,0,0,0.4);">
+        <button class="actionBtn" onclick="document.getElementById('modalRead').style.display='none'" style="border: 1px solid rgba(255,255,255,0.15);">FECHAR</button>
+        <button class="actionBtn" id="modalReadCopyBtn" style="border: 1px solid rgba(255,255,255,0.15);">COPIAR TEXTO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERLAYS E LIGHTBOX -->
+  <div id="ivLightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.02); backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; cursor: zoom-out;" onclick="this.style.display='none'; const vid = document.getElementById('ivLightboxVideo'); if(vid) vid.pause();">
+    <img id="ivLightboxImg" src="" style="max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); display: none;">
+    <video id="ivLightboxVideo" src="" controls loop style="max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); display: none;" onclick="event.stopPropagation()"></video>
+  </div>
+
+  <!-- Immersive Presentation Lightbox -->
+  <div id="presentationLightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.02); z-index: 10000; justify-content: center; align-items: center; cursor: zoom-out; backdrop-filter: blur(10px);" onclick="this.style.display='none'">
+    
+    <!-- Navigation Buttons -->
+    <button id="btnPrevLightbox" style="position: absolute; left: 24px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; width: 64px; height: 64px; border-radius: 50%; font-size: 2rem; cursor: pointer; display: none; justify-content: center; align-items: center; z-index: 10001; backdrop-filter: blur(5px); transition: all 0.3s ease;" onclick="event.stopPropagation(); window.navigatePresentation(-1)" onmouseover="this.style.background='var(--brandGrad)'; this.style.borderColor='transparent';" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.borderColor='rgba(255,255,255,0.2)';">❮</button>
+    
+    <button id="btnNextLightbox" style="position: absolute; right: 24px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; width: 64px; height: 64px; border-radius: 50%; font-size: 2rem; cursor: pointer; display: none; justify-content: center; align-items: center; z-index: 10001; backdrop-filter: blur(5px); transition: all 0.3s ease;" onclick="event.stopPropagation(); window.navigatePresentation(1)" onmouseover="this.style.background='var(--brandGrad)'; this.style.borderColor='transparent';" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.borderColor='rgba(255,255,255,0.2)';">❯</button>
+
+    <div id="presentationLightboxContent" style="display: flex; flex-direction: row; align-items: center; max-width: 85vw; max-height: 90vh; background: rgba(255,255,255,0.02); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); cursor: default;" onclick="event.stopPropagation()">
+      
+      <!-- Lado Esquerdo: Imagem Gigante -->
+      <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center; background: transparent; position: relative;">
+        <img id="presentationLightboxImg" src="" style="max-height: 90vh; max-width: 50vw; object-fit: contain;">
+        
+        <button id="btnCopyLightbox" onclick="window.copyZoomImage(this)" style="position: absolute; top: 24px; left: 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); transition: all 0.2s ease;">
+          📋 COPIAR IMAGEM
+        </button>
+      </div>
+      
+      <!-- Lado Direito: Texto/Contexto -->
+      <div style="flex: 1; padding: 48px; display: flex; flex-direction: column; justify-content: center; background: transparent; border-left: 1px solid rgba(255,255,255,0.1);">
+        <h2 id="presentationLightboxTitle" style="color: var(--cyan); font-family: var(--uiRounded); font-size: 2rem; margin-top: 0; margin-bottom: 32px; text-transform: uppercase; letter-spacing: 2px;">Contexto da Cena</h2>
+        <div id="presentationLightboxText" style="color: #fff; font-size: 1.4rem; line-height: 1.8; font-family: var(--uiText); text-shadow: 0 2px 4px rgba(0,0,0,0.5); overflow-y: auto; max-height: 60vh; padding-right: 16px;">
+          <!-- Text will be injected here -->
+        </div>
+      </div>
+      <button id="btnCloseLightbox" style="position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.1); border: none; color: white; width: 48px; height: 48px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center;" onclick="document.getElementById('presentationLightbox').style.display='none'">✕</button>
+    </div>
+  </div>
+  <script>
+    window.openLightbox = function(src, isVideo = false) {
+      const img = document.getElementById('ivLightboxImg');
+      const vid = document.getElementById('ivLightboxVideo');
+      
+      if (isVideo || src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm')) {
+        img.style.display = 'none';
+        img.src = '';
+        vid.src = src;
+        vid.style.display = 'block';
+        vid.play().catch(e => console.warn('Autoplay prevented', e));
+      } else {
+        vid.style.display = 'none';
+        vid.src = '';
+        img.src = src;
+        img.style.display = 'block';
+      }
+      
+      document.getElementById('ivLightbox').style.display = 'flex';
+    };
+    
+    // Legacy support (just in case)
+    window.openPresentationZoom = function(src, title, textContent) {
+      window.openPresentationGallery([{ src, title, textContent }], 0);
+    };
+
+    window.presentationSlides = [];
+    window.currentPresentationIndex = 0;
+
+    window.openPresentationGallery = function(slides, startIndex) {
+      window.presentationSlides = slides;
+      window.currentPresentationIndex = startIndex || 0;
+      window.renderPresentationSlide();
+    };
+
+    window.renderPresentationSlide = function() {
+      if (!window.presentationSlides || window.presentationSlides.length === 0) return;
+      const slide = window.presentationSlides[window.currentPresentationIndex];
+      
+      document.getElementById('presentationLightboxImg').src = slide.src;
+      document.getElementById('presentationLightboxTitle').innerHTML = slide.title;
+      document.getElementById('presentationLightboxText').innerHTML = slide.textContent;
+      document.getElementById('presentationLightbox').style.display = 'flex';
+      
+      // Control arrows
+      const btnPrev = document.getElementById('btnPrevLightbox');
+      const btnNext = document.getElementById('btnNextLightbox');
+      if (window.presentationSlides.length > 1) {
+        btnPrev.style.display = 'flex';
+        btnNext.style.display = 'flex';
+      } else {
+        btnPrev.style.display = 'none';
+        btnNext.style.display = 'none';
+      }
+      
+      // Reset the copy button state
+      const btn = document.getElementById('btnCopyLightbox');
+      if (btn) {
+        btn.innerHTML = '📋 COPIAR IMAGEM';
+        btn.style.background = 'rgba(0,0,0,0.6)';
+        btn.style.borderColor = 'rgba(255,255,255,0.3)';
+      }
+    };
+    
+    window.navigatePresentation = function(direction) {
+       let newIdx = window.currentPresentationIndex + direction;
+       if (newIdx < 0) newIdx = window.presentationSlides.length - 1;
+       if (newIdx >= window.presentationSlides.length) newIdx = 0;
+       window.currentPresentationIndex = newIdx;
+       window.renderPresentationSlide();
+    };
+
+    window.copyZoomImage = async function(btn) {
+      try {
+        const contentEl = document.getElementById('presentationLightboxContent');
+        if (!contentEl) return;
+        
+        btn.innerHTML = '⏳ GERANDO IMAGEM...';
+        
+        // Hide UI elements we don't want in the screenshot
+        const copyBtn = document.getElementById('btnCopyLightbox');
+        const closeBtn = document.getElementById('btnCloseLightbox');
+        if (copyBtn) copyBtn.style.display = 'none';
+        if (closeBtn) closeBtn.style.display = 'none';
+
+        // Capture the DOM element
+        const canvas = await html2canvas(contentEl, {
+          backgroundColor: '#111',
+          scale: 2, // Higher quality
+          useCORS: true // To load images across origins if needed
+        });
+        
+        // Restore UI elements
+        if (copyBtn) copyBtn.style.display = 'flex';
+        if (closeBtn) closeBtn.style.display = 'flex';
+        
+        btn.innerHTML = '⏳ COPIANDO...';
+
+        canvas.toBlob(async function(blob) {
+          const data = [new ClipboardItem({ [blob.type]: blob })];
+          await navigator.clipboard.write(data);
+          
+          btn.innerHTML = '✔ COPIADO!';
+          btn.style.background = 'var(--brandGrad)';
+          btn.style.borderColor = 'transparent';
+          
+          setTimeout(() => {
+            btn.innerHTML = '📋 COPIAR IMAGEM';
+            btn.style.background = 'rgba(0,0,0,0.6)';
+            btn.style.borderColor = 'rgba(255,255,255,0.3)';
+          }, 2000);
+        }, 'image/png');
+        
+      } catch (err) {
+        console.error('Erro ao copiar:', err);
+        btn.innerHTML = '❌ ERRO';
+        setTimeout(() => {
+          btn.innerHTML = '📋 COPIAR IMAGEM';
+        }, 2000);
+      }
+    };
+  </script>
+
+  <script src="js/state.js?v=214"></script>
+  <script src="js/api.js?v=214"></script>
+  <script src="js/ui.js?v=214"></script>
+  <script src="js/app.js?v=214"></script>
+  <script src="js/storyboard.js?v=214"></script>
+  <script src="js/audio.js?v=214"></script>
+  <script src="js/social.js?v=214"></script>
+  <script src="js/flow.js?v=214"></script>
+  <script src="js/documentarios.js?v=215"></script>
+  <script src="js/shorts.js?v=214"></script>
+  <script src="js/comercial.js?v=216"></script>
+  <!-- Modal Imersivo de Renderização (FFMPEG) Global -->
+  <div id="renderImmersiveModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 20000; flex-direction: column; align-items: center; justify-content: center; padding: 40px; backdrop-filter: blur(10px);">
+    <div style="width: 100%; max-width: 1000px; height: 100%; background: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+      <div id="renderModalContent" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
