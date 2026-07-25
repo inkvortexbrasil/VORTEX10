@@ -1,0 +1,122 @@
+/* Tipografia - Fontes Locais */
+@font-face { font-family: 'DMSans'; src: url('../fonts/DM Sans/DMSans[opsz,wght].ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('../fonts/Inter/Inter[opsz,wght].ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Manrope'; src: url('../fonts/Manrope/Manrope[wght].ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'NotoSans'; src: url('../fonts/Noto Sans/NotoSans-VariableFont_wdth,wght.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'PlusJakartaSans'; src: url('../fonts/Plus Jakarta Sans/PlusJakartaSans[wght].ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'SourceSans3'; src: url('../fonts/Source Sans 3/SourceSans3[wght].ttf') format('truetype'); font-display: swap; }
+
+:root {
+  /* Cores da Marca e UI */
+  --ink: #071c33;
+  --cyan: #00aeef;
+  --magenta: #e8006d;
+  --yellow: #f8c000;
+  --brandGrad: linear-gradient(135deg, var(--cyan), #7c3aed, var(--magenta), var(--yellow));
+  
+  /* Tematização Escura (Dark Theme Default) */
+  --ivBackground: #030814;
+  --ivSurface: rgba(16, 22, 35, 0.45);
+  --ivSurfaceControl: rgba(30, 41, 59, 0.6);
+  --ivAuroraSoft: rgba(255, 255, 255, 0.05);
+  --ivTextPrimary: #ffffff;
+  --ivTextSecondary: rgba(255, 255, 255, 0.7);
+  
+  /* Tipografia */
+  --uiRounded: 'Space Grotesk', system-ui, sans-serif;
+  --uiBodyFont: 'Inter', system-ui, sans-serif;
+  --fixedTabsFont: 'Space Grotesk', system-ui, sans-serif;
+  --readingFont: 'Inter', sans-serif;
+  --readingFontSize: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Remove Input Spinners completely */
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Enforce 9:16 Aspect Ratio ONLY for Shorts/Social Media Players */
+.shorts-player, .media-player-shorts {
+  aspect-ratio: 9/16;
+  width: 100%;
+  max-width: 380px;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+  border-radius: 12px;
+}
+
+body {
+  font-family: var(--uiBodyFont);
+  background-color: var(--ivBackground);
+  background-image: var(--ivStageImage, none);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--ivTextPrimary);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* Base Topbar */
+.vortexTopbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: transparent !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.logoBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  min-width: 320px;
+  width: auto;
+  padding: 0 16px;
+  filter: drop-shadow(0 0 15px rgba(0, 174, 239, 0.4)) drop-shadow(0 0 30px rgba(232, 0, 109, 0.2));
+  transition: all 0.3s ease;
+}
+
+.logoBox:hover {
+  filter: drop-shadow(0 0 20px rgba(0, 174, 239, 0.6)) drop-shadow(0 0 40px rgba(232, 0, 109, 0.4));
+  transform: scale(1.02);
+}
+
+.logoBox img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
